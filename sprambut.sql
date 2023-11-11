@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 25, 2020 at 09:14 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.9
+-- Host: localhost:3306
+-- Generation Time: Nov 11, 2023 at 09:54 AM
+-- Server version: 8.0.33
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spforward2`
+-- Database: `sprambut`
 --
 
 -- --------------------------------------------------------
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `gejala` (
-  `id_gejala` int(11) NOT NULL,
+  `id_gejala` int NOT NULL,
   `kode_gejala` varchar(20) NOT NULL,
   `nama_gejala` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -38,23 +38,26 @@ CREATE TABLE `gejala` (
 --
 
 INSERT INTO `gejala` (`id_gejala`, `kode_gejala`, `nama_gejala`) VALUES
-(3, 'G01', 'Warna kulit menjadi merah'),
-(4, 'G02', 'Kulit seperti bersisik'),
-(5, 'G03', 'Terasa gatal yang tidak tertahan'),
-(6, 'G04', 'Rasa gatal pada malam hari'),
-(7, 'G05', 'Kondisi kulit yang berubah'),
-(8, 'G06', 'Tumbuh benjolan dipermukaan kulit'),
-(9, 'G07', 'Tumbuh benjolan merah kecoklatan'),
-(10, 'G08', 'Kulit meradang'),
-(11, 'G09', 'Kulit melepuh'),
-(12, 'G10', 'Gatal dibagian selangkangan kaki/ketiak/leher/bokong/punggung'),
-(13, 'G11', 'Muncul benjolan merah'),
-(14, 'G12', 'Kulit terasa perih'),
-(15, 'G13', 'Tumbuh benjolan kecil agak memutih'),
-(16, 'G14', 'Kulit terasa berminyak'),
-(17, 'G15', 'Rasa gatal yang panas'),
-(18, 'G16', 'Rasa gatal yang perih'),
-(19, 'G17', 'Tumbuh benjolan berisi nanah');
+(4, 'B01', 'Adanya rasa gatal dan serpihan berwarna putih'),
+(22, 'B02', 'Kulit kepala atau rambut yang berminyak'),
+(23, 'B03', 'Stres psikologis'),
+(24, 'B04', 'Banyak rambut yang terlepas ketika sedang keramas atau menyisir rambut'),
+(25, 'B05', 'Kepadatan rambut berkurang, sehingga rambut terlihat semakin menipis'),
+(26, 'B06', 'Rambut mudah patah pada ujungnya'),
+(27, 'B07', 'Adanya kecenderungan mengalami kebotakan dalam garis keturunan'),
+(28, 'B08', 'Pengelupasan pada kulit kepala'),
+(29, 'B09', 'Adanya infeksi jamur di kulit kepala'),
+(30, 'B10', 'Adanya radang pada kelenjar folikel rambu'),
+(31, 'B11', 'Adanya benjolan kecil berwarna putih pada akar rambut disertai rasa nyeri dan rambut yang rontok'),
+(32, 'B12', 'Adanya kemerahan di kulit kepala yang berbentuk sirkular'),
+(33, 'B13', 'Permukaan luar rambut sering terasa seperti panas'),
+(34, 'B14', 'Rambut tampak bercabang'),
+(35, 'B15', 'Rambut mudah kusut'),
+(36, 'B16', 'Rambut terlihat kusam dan kasar'),
+(37, 'B17', 'Warna rambut terlihat kusam'),
+(38, 'B18', 'Kulit kepala lengket dan berminyak'),
+(39, 'B19', 'Pori-pori lebih besar dan mudah kotor'),
+(40, 'B20', 'Rambut terlihat basah dan lengket');
 
 -- --------------------------------------------------------
 
@@ -63,7 +66,7 @@ INSERT INTO `gejala` (`id_gejala`, `kode_gejala`, `nama_gejala`) VALUES
 --
 
 CREATE TABLE `pengguna` (
-  `id_pengguna` int(11) NOT NULL,
+  `id_pengguna` int NOT NULL,
   `nama_lengkap` varchar(50) NOT NULL,
   `username` varchar(20) NOT NULL,
   `password` varchar(20) NOT NULL,
@@ -92,7 +95,7 @@ INSERT INTO `pengguna` (`id_pengguna`, `nama_lengkap`, `username`, `password`, `
 --
 
 CREATE TABLE `penyakit` (
-  `id_penyakit` int(11) NOT NULL,
+  `id_penyakit` int NOT NULL,
   `kode_penyakit` varchar(20) NOT NULL,
   `nama_penyakit` varchar(50) NOT NULL,
   `deskripsi` text NOT NULL,
@@ -119,9 +122,9 @@ INSERT INTO `penyakit` (`id_penyakit`, `kode_penyakit`, `nama_penyakit`, `deskri
 --
 
 CREATE TABLE `riwayat` (
-  `id_riwayat` int(11) NOT NULL,
-  `id_pengguna` int(11) NOT NULL,
-  `id_penyakit` int(11) DEFAULT NULL,
+  `id_riwayat` int NOT NULL,
+  `id_pengguna` int NOT NULL,
+  `id_penyakit` int DEFAULT NULL,
   `tanggal` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -172,9 +175,9 @@ INSERT INTO `riwayat` (`id_riwayat`, `id_pengguna`, `id_penyakit`, `tanggal`) VA
 --
 
 CREATE TABLE `rule` (
-  `id_rule` int(11) NOT NULL,
-  `id_penyakit` int(11) NOT NULL,
-  `id_gejala` int(11) NOT NULL
+  `id_rule` int NOT NULL,
+  `id_penyakit` int NOT NULL,
+  `id_gejala` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -182,28 +185,8 @@ CREATE TABLE `rule` (
 --
 
 INSERT INTO `rule` (`id_rule`, `id_penyakit`, `id_gejala`) VALUES
-(36, 1, 3),
 (37, 1, 4),
-(38, 1, 5),
-(39, 2, 3),
-(40, 2, 4),
-(41, 2, 5),
-(42, 2, 6),
-(43, 3, 7),
-(44, 3, 8),
-(45, 3, 9),
-(46, 4, 10),
-(47, 4, 11),
-(48, 4, 12),
-(51, 6, 13),
-(52, 6, 15),
-(53, 6, 16),
-(54, 7, 17),
-(55, 7, 18),
-(56, 7, 19),
-(57, 5, 13),
-(58, 5, 14),
-(59, 5, 15);
+(40, 2, 4);
 
 --
 -- Indexes for dumped tables
@@ -251,31 +234,31 @@ ALTER TABLE `rule`
 -- AUTO_INCREMENT for table `gejala`
 --
 ALTER TABLE `gejala`
-  MODIFY `id_gejala` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_gejala` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `pengguna`
 --
 ALTER TABLE `pengguna`
-  MODIFY `id_pengguna` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_pengguna` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `penyakit`
 --
 ALTER TABLE `penyakit`
-  MODIFY `id_penyakit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_penyakit` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `riwayat`
 --
 ALTER TABLE `riwayat`
-  MODIFY `id_riwayat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `id_riwayat` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `rule`
 --
 ALTER TABLE `rule`
-  MODIFY `id_rule` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id_rule` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- Constraints for dumped tables
@@ -285,15 +268,15 @@ ALTER TABLE `rule`
 -- Constraints for table `riwayat`
 --
 ALTER TABLE `riwayat`
-  ADD CONSTRAINT `riwayat_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `riwayat_ibfk_2` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id_penyakit`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `riwayat_ibfk_1` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id_pengguna`) ON DELETE CASCADE,
+  ADD CONSTRAINT `riwayat_ibfk_2` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id_penyakit`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `rule`
 --
 ALTER TABLE `rule`
-  ADD CONSTRAINT `rule_ibfk_1` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id_penyakit`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `rule_ibfk_2` FOREIGN KEY (`id_gejala`) REFERENCES `gejala` (`id_gejala`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `rule_ibfk_1` FOREIGN KEY (`id_penyakit`) REFERENCES `penyakit` (`id_penyakit`) ON DELETE CASCADE,
+  ADD CONSTRAINT `rule_ibfk_2` FOREIGN KEY (`id_gejala`) REFERENCES `gejala` (`id_gejala`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
